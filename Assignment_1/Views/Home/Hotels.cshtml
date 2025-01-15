@@ -1,0 +1,337 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+
+        .custom-radio-group {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+            .custom-radio-group .custom-control {
+                margin-right: 10px;
+                margin-bottom: 10px;
+            }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 id="hotel-title">CapeMint-Hotels</h2>
+            <img id="hotel-logo" src="~/wwwroot/Images/CROW.png" alt="Logo" class="logo"> 
+        </div>
+        <h3>Booking form</h3>
+        <form id="booking-form">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="hotel">Select Hotel</label>
+                    <select id="hotel" class="form-control" onchange="updateHotel()">
+                        <option value="CapeCrow">CapeCrow</option>
+                        <option value="CapeHive">CapeHive</option>
+                        <option value="CapeHoney">CapeHoney</option>
+                        <option value="CapeIvory">CapeIvory</option>
+                        <option value="CapeSweet">CapeSweet</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="first-name">First name:</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Enter first name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="dob">Date of Birth:</label>
+                    <input type="date" id="dob" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="surname">Surname:</label>
+                    <input type="text" id="surname" class="form-control" placeholder="Enter surname" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="address">Address:</label>
+                    <input type="text" id="address" class="form-control" placeholder="Enter address" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="initials">Initials:</label>
+                    <input type="text" id="initials" class="form-control" placeholder="Enter initials" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="telephone">Telephone:</label>
+                    <input type="tel" id="telephone" class="form-control" placeholder="Enter telephone" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="email">Email address:</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter email" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="id-type">Id type:</label>
+                    <select id="id-type" class="form-control">
+                        <option value="SA">South African id</option>
+                        <option value="Passport">Passport</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="id-number">Id number:</label>
+                    <input type="text" id="id-number" class="form-control" placeholder="Enter ID number" required>
+                </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <div class="form-group">
+                            <label for="meals">Meal Requirements:</label>
+                            <select id="meals" class="form-control" required>
+                                <option value="">Select</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="roomType">Select Room Type:</label>
+                        <select id="roomType" class="form-control" onchange="updateRoomDetails()">
+                           
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="id-number">Id number:</label>
+                        <input type="text" id="id-number" class="form-control" placeholder="Enter ID number" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="price">Price:</label>
+                        <input type="text" id="price" class="form-control" placeholder="Price" readonly>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="features">Features:</label>
+                        <textarea id="features" class="form-control" placeholder="Features" readonly></textarea>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success" onclick="confirmBooking()">Confirm Booking</button>
+        </form>
+    </div>
+
+    <script>
+        const hotels = {
+            "CapeHoney": {
+                logo: "@Url.Content("~/wwwroot/Images/HONEY.png")",
+                rooms: {
+                    "Standard": {
+                        "price": "R3000",
+                        "features": "Breakfast excluded, single bed, TV, internet"
+                    },
+                    "Deluxe": {
+                        "price": "R5000",
+                        "features": "Breakfast included, double (2) single beds, TV, internet"
+                    },
+                    "Exquisite": {
+                        "price": "R7000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator"
+                    },
+                    "Executive": {
+                        "price": "R10000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    }
+                },
+                meals: ["Regular", "Vegan", "Gluten-free"]
+            },
+            "CapeIvory": {
+                logo: "@Url.Content("~/wwwroot/Images/IVORY.png")",
+                rooms: {
+                    "Standard": {
+                        "price": "R2500",
+                        "features": "Breakfast excluded, single bed, TV, internet"
+                    },
+                    "Deluxe": {
+                        "price": "R5000",
+                        "features": "Breakfast included, double (2) single beds, TV, internet"
+                    },
+                    "Executive": {
+                        "price": "R8000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    }
+                },
+                meals: ["Regular", "Vegan", "Halal", "Kosher", "Glutenfree", "keto"]
+            },
+            "CapeSweet": {
+                logo: "@Url.Content("~/wwwroot/Images/SWEET.png")",
+                rooms: {
+                    "Standard": {
+                        "price": "R3500",
+                        "features": "Breakfast excluded, single bed, TV, internet"
+                    },
+                    "Comfort": {
+                        "price": "R5000",
+                        "features": "Breakfast included, double (2) single beds, TV, internet"
+                    },
+                    "Executive": {
+                        "price": "R9000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    },
+                    "Diamond": {
+                        "price": "R12000",
+                        "features": "Breakfast included, king-sized bed, TV, internet, complimentary drinks in refrigerator; laundry, room service, private swimming pool, personal butler service"
+                    }
+                },
+                meals: ["Regular", "Vegan", "Halal", "Kosher"]
+            },
+            "CapeHive": {
+                logo: "@Url.Content("~/wwwroot/Images/HIVE.png")",
+                rooms: {
+                    "Standard": {
+                        "price": "R5000",
+                        "features": "Breakfast excluded, single bed, TV, internet"
+                    },
+                    "Double": {
+                        "price": "R7000",
+                        "features": "Breakfast included, double (2) single beds, TV, internet"
+                    },
+                    "Executive": {
+                        "price": "R10000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    }
+                },
+                meals: ["Regular", "Vegan", "Glutenfree", "keto", "Paleo"]
+            },
+            "CapeCrow": {
+                logo: "@Url.Content("~/wwwroot/Images/CROW.png")",
+                rooms: {
+                    "Budget": {
+                        "price": "R2500",
+                        "features": "Breakfast excluded, single bed, TV, internet"
+                    },
+                    "Spotlight": {
+                        "price": "R4000",
+                        "features": "Breakfast included, double (2) single beds, TV, internet"
+                    },
+                    "Deluxe": {
+                        "price": "R6000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    },
+                    "Gold": {
+                        "price": "R8000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    },
+                    "Diamond": {
+                        "price": "R12000",
+                        "features": "Breakfast included, queen-sized double beds, TV, internet, complimentary drinks in refrigerator; laundry, room service, tourism tour of Capetropolis"
+                    }
+                },
+                meals: ["Regular", "Vegan", "Halal", "Kosher", "Indian"]
+            }
+        };
+        let currentHotel = "CapeCrow";
+
+        function updateHotel() {
+            currentHotel = document.getElementById('hotel').value;
+            const hotelData = hotels[currentHotel];
+            document.getElementById("hotel-title").textContent = currentHotel;
+            document.getElementById("hotel-logo").src = hotelData.logo;
+            populateRoomTypes();
+            populateMealOptions();
+            updateRoomDetails();
+        }
+
+        function populateRoomTypes() {
+            const roomTypeSelect = document.getElementById('roomType');
+            const rooms = hotels[currentHotel].rooms;
+            roomTypeSelect.innerHTML = '';
+            for (let room in rooms) {
+                let option = document.createElement('option');
+                option.value = room;
+                option.textContent = room;
+                roomTypeSelect.appendChild(option);
+            }
+            updateRoomDetails(); 
+        }
+
+        function updateRoomDetails() {
+            const roomTypeSelect = document.getElementById('roomType');
+            const selectedRoom = roomTypeSelect.value;
+            if (selectedRoom) {
+                const roomDetails = hotels[currentHotel].rooms[selectedRoom];
+                document.getElementById('price').value = roomDetails.price;
+                document.getElementById('features').value = roomDetails.features;
+            } else {
+                document.getElementById('price').value = '';
+                document.getElementById('features').value = '';
+            }
+        }
+
+        function populateMealOptions() {
+            const mealsSelect = document.getElementById('meals');
+            const meals = hotels[currentHotel].meals;
+            mealsSelect.innerHTML = '';
+            meals.forEach(meal => {
+                let option = document.createElement('option');
+                option.value = meal;
+                option.textContent = meal;
+                mealsSelect.appendChild(option);
+            });
+        }
+
+        function generateGUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                let r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+
+        function confirmBooking() {
+            const booking = {
+                id: generateGUID(),
+                hotel: currentHotel,
+                firstName: document.getElementById('first-name').value,
+                surname: document.getElementById('surname').value,
+                initials: document.getElementById('initials').value,
+                email: document.getElementById('email').value,
+                dob: document.getElementById('dob').value,
+                address: document.getElementById('address').value,
+                telephone: document.getElementById('telephone').value,
+                meals: document.getElementById('meals').value,
+                roomType: document.getElementById('roomType').value,
+                price: document.getElementById('price').value,
+                features: document.getElementById('features').value,
+                bookingDate: new Date().toISOString()
+             
+            };
+
+             let bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+        bookings.push(booking);
+        localStorage.setItem('bookings', JSON.stringify(bookings));
+
+        alert('Booking Confirmed!');
+
+    }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            populateRoomTypes();
+            populateMealOptions();
+            updateRoomDetails();
+        });
+    </script>
+
+</body>
+</html>
+

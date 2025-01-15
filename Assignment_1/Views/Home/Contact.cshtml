@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - Capetropolis</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('@Url.Content("~/wwwroot/Images/POOL.jpg")'); /* Replace with your background image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        .content-container {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .contact-info {
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 content-container">
+        <div class="text-center mb-5">
+            <h1>Contact Us</h1>
+        </div>
+
+        <div class="contact-info">
+            <p><strong>Address:</strong> 123 Ocean Drive,Main City, Cape Town</p>
+            <p><strong>Phone:</strong> 011 865 7223</p>
+            <p><strong>Email:</strong> info@capetropolis.com</p>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

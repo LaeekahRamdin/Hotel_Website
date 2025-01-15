@@ -1,0 +1,393 @@
+﻿@{
+    ViewBag.Title = "Meal Agent Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Agent Registration</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-check {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .btn-group {
+            margin-bottom: 1rem;
+        }
+
+        .table {
+            margin-top: 20px;
+        }
+
+        .form-inline .form-group {
+            margin-right: 10px;
+        }
+
+        .selected {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+       
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2>Meal Agent Registration</h2>
+        </div>
+        <form id="meal-agent-form">
+            <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="first-name">First name:</label>
+                    <input type="text" id="first-name" class="form-control" placeholder="Enter first name" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="surname">Surname:</label>
+                    <input type="text" id="surname" class="form-control" placeholder="Enter surname" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="email">Email address:</label>
+                    <input type="email" id="email" class="form-control" placeholder="Enter email" required>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="telephone">Telephone:</label>
+                    <input type="tel" id="telephone" class="form-control" placeholder="Enter telephone" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Meal Services:</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="regular" value="Regular">
+                    <label class="form-check-label" for="regular">Regular</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="vegan" value="Vegan">
+                    <label class="form-check-label" for="vegan">Vegan</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="halal" value="Halal">
+                    <label class="form-check-label" for="halal">Halal</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="kosher" value="Kosher">
+                    <label class="form-check-label" for="kosher">Kosher</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="indian" value="Indian">
+                    <label class="form-check-label" for="indian">Indian</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="gluten-free" value="Gluten-free">
+                    <label class="form-check-label" for="gluten-free">Gluten-free</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="keto" value="Keto">
+                    <label class="form-check-label" for="keto">Keto</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="paleo" value="Paleo">
+                    <label class="form-check-label" for="paleo">Paleo</label>
+                </div>
+            </div>
+            <div class="btn-group">
+                <button type="button" class="btn btn-light" onclick="addMealAgent()">Add</button>
+                <button type="button" class="btn btn-light" onclick="findMealAgent()">Find</button>
+                <button type="button" class="btn btn-light" onclick="editMealAgent()">Edit</button>
+                <button type="button" class="btn btn-light" onclick="updateMealAgent()">Update</button>
+                <button type="button" class="btn btn-danger" onclick="deleteMealAgent()">Delete</button>
+            </div>
+        </form>
+        <div class="form-inline">
+            <input type="text" class="form-control" id="search" placeholder="Search" onkeyup="searchTable()">
+        </div>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name + Surname</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th>Meal Services</th>
+                </tr>
+            </thead>
+            <tbody class="meal-agent-table-body">
+               
+            </tbody>
+        </table>
+
+        
+        <h2>Order a Meal</h2>
+        <form id="meal-order-form">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="order-first-name">First name</label>
+                    <input type="text" id="order-first-name" class="form-control" placeholder="Name" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="meal-details">Meal details</label>
+                    <textarea id="meal-details" class="form-control" placeholder="Describe your meal here" required></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="order-surname">Surname</label>
+                    <input type="text" id="order-surname" class="form-control" placeholder="Surname" required>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="hotel-residence">Hotel residence</label>
+                    <select id="hotel-residence" class="form-control" required>
+                        <option value="CapeCrow">CapeCrow</option>
+                        <option value="CapeHoney">CapeHoney</option>
+                        <option value="CapeSweet">CapeSweet</option>
+                        <option value="CapeHive">CapeHive</option>
+                        <option value="CapeIvory">CapeIvory</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="meal-type">Meal type</label>
+                    <select id="meal-type" class="form-control" required>
+                        <option value="Regular">Regular</option>
+                        <option value="Vegan">Vegan</option>
+                        <option value="Halal">Halal</option>
+                        <option value="Kosher">Kosher</option>
+                        <option value="Indian">Indian</option>
+                        <option value="Gluten-free">Gluten-free</option>
+                        <option value="Keto">Keto</option>
+                        <option value="Paleo">Paleo</option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="meal-agent">Meal agent</label>
+                    <input type="text" id="meal-agent" class="form-control" placeholder="Placeholder" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <button type="button" class="btn btn-primary btn-block" onclick="orderMeal()">Order meal</button>
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="button" class="btn btn-secondary btn-block" onclick="viewOrder()">View order</button>
+                </div>
+            </div>
+        </form>
+
+        
+        <h2 class="mt-5">Meal providers</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name + Surname</th>
+                    <th>Email</th>
+                    <th>Telephone</th>
+                    <th>Meal Services</th>
+                </tr>
+            </thead>
+            <tbody class="meal-agent-table-body">
+                
+            </tbody>
+        </table>
+
+       
+       
+        <div class="modal fade" id="orderConfirmationModal" tabindex="-1" role="dialog" aria-labelledby="orderConfirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="orderConfirmationModalLabel">Order Confirmation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="order-details">
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            let mealAgents = [];
+            let currentEditIndex = -1;
+            let orders = [];
+
+            function getMealServices() {
+                const services = [];
+                $('input[type="checkbox"]:checked').each(function () {
+                    services.push($(this).val());
+                });
+                return services.join(', ');
+            }
+
+            function addMealAgent() {
+                const mealAgent = {
+                    firstName: $('#first-name').val(),
+                    surname: $('#surname').val(),
+                    email: $('#email').val(),
+                    telephone: $('#telephone').val(),
+                    mealServices: getMealServices()
+                };
+                mealAgents.push(mealAgent);
+                displayMealAgents();
+                $('#meal-agent-form')[0].reset();
+            }
+
+            function displayMealAgents() {
+                const $tableBody = $('.meal-agent-table-body');
+                $tableBody.empty();
+                mealAgents.forEach((agent, index) => {
+                    const row = `
+                                    <tr data-index="${index}">
+                                        <td>${agent.firstName} ${agent.surname}</td>
+                                        <td>${agent.email}</td>
+                                        <td>${agent.telephone}</td>
+                                        <td>${agent.mealServices}</td>
+                                    </tr>
+                                `;
+                    $tableBody.append(row);
+                });
+                $('.meal-agent-table-body tr').click(function () {
+                    currentEditIndex = $(this).data('index');
+                    loadMealAgentForEdit(currentEditIndex);
+                    $(this).addClass('selected').siblings().removeClass('selected');
+                });
+            }
+
+            function loadMealAgentForEdit(index) {
+                const agent = mealAgents[index];
+                $('#first-name').val(agent.firstName);
+                $('#surname').val(agent.surname);
+                $('#email').val(agent.email);
+                $('#telephone').val(agent.telephone);
+                $('input[type="checkbox"]').each(function () {
+                    $(this).prop('checked', agent.mealServices.includes($(this).val()));
+                });
+            }
+
+            function findMealAgent() {
+                const firstName = $('#first-name').val().toLowerCase();
+                const surname = $('#surname').val().toLowerCase();
+                const agent = mealAgents.find(agent => agent.firstName.toLowerCase() === firstName && agent.surname.toLowerCase() === surname);
+                if (agent) {
+                    currentEditIndex = mealAgents.indexOf(agent);
+                    loadMealAgentForEdit(currentEditIndex);
+                    displayMealAgents();
+                    $(`.meal-agent-table-body tr[data-index=${currentEditIndex}]`).addClass('selected').siblings().removeClass('selected');
+                } else {
+                    alert('Meal Agent not found');
+                }
+            }
+
+            function editMealAgent() {
+                findMealAgent();
+            }
+
+            function updateMealAgent() {
+                if (currentEditIndex > -1) {
+                    mealAgents[currentEditIndex] = {
+                        firstName: $('#first-name').val(),
+                        surname: $('#surname').val(),
+                        email: $('#email').val(),
+                        telephone: $('#telephone').val(),
+                        mealServices: getMealServices()
+                    };
+                    displayMealAgents();
+                    $('#meal-agent-form')[0].reset();
+                    currentEditIndex = -1;
+                } else {
+                    alert('No meal agent selected for updating');
+                }
+            }
+
+            function deleteMealAgent() {
+                if (currentEditIndex > -1) {
+                    mealAgents.splice(currentEditIndex, 1);
+                    displayMealAgents();
+                    $('#meal-agent-form')[0].reset();
+                    currentEditIndex = -1;
+                } else {
+                    alert('No meal agent selected for deletion');
+                }
+            }
+
+            function searchTable() {
+                const searchValue = $('#search').val().toLowerCase();
+                const $tableBody = $('.meal-agent-table-body');
+                $tableBody.find('tr').each(function () {
+                    const $row = $(this);
+                    const rowText = $row.text().toLowerCase();
+                    $row.toggle(rowText.indexOf(searchValue) > -1);
+                });
+            }
+
+            function orderMeal() {
+                const order = {
+                    orderID: generateUUID(),
+                    date: new Date().toLocaleString(),
+                    firstName: $('#order-first-name').val(),
+                    surname: $('#order-surname').val(),
+                    mealType: $('#meal-type').val(),
+                    mealAgent: $('#meal-agent').val(),
+                    mealDetails: $('#meal-details').val(),
+                    hotelResidence: $('#hotel-residence').val()
+                };
+                orders.push(order);
+                $('#meal-order-form')[0].reset();
+                alert('Order placed successfully!');
+            }
+
+            function viewOrder() {
+                const lastOrder = orders[orders.length - 1];
+                if (lastOrder) {
+                    $('#order-details').html(`
+                                    <p>Order ID: ${lastOrder.orderID}</p>
+                                    <p>Date: ${lastOrder.date}</p>
+                                    <p>First Name: ${lastOrder.firstName}</p>
+                                    <p>Surname: ${lastOrder.surname}</p>
+                                    <p>Meal Type: ${lastOrder.mealType}</p>
+                                    <p>Meal Agent: ${lastOrder.mealAgent}</p>
+                                    <p>Meal Details: ${lastOrder.mealDetails}</p>
+                                    <p>Hotel Residence: ${lastOrder.hotelResidence}</p>
+                                `);
+                    $('#orderConfirmationModal').modal('show');
+                } else {
+                    alert('No orders found.');
+                }
+            }
+            
+
+            function generateUUID() {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            }
+
+            $(document).ready(function () {
+                displayMealAgents();
+            });
+
+
+
+        </script>
+</body>
+</html>
+

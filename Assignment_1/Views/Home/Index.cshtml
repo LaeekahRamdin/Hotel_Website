@@ -1,0 +1,108 @@
+﻿@model IEnumerable<Assignment_1.Models.Hotel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Capetropolis</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <style>
+        .btn-grey {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+        }
+
+            .btn-grey:hover {
+                background-color: #5a6268;
+            }
+
+        .btn-outline-grey {
+            border-color: #6c757d;
+            color: #6c757d;
+        }
+
+            .btn-outline-grey:hover {
+                background-color: #6c757d;
+                color: white;
+            }
+
+        .hotel-item {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h1>Booking your stay in Capetropolis</h1>
+                <p>Secure a safe accommodation and a memorable experience in our lodging facilities.</p>
+                <button id="showHotelsBtn" class="btn btn-secondary mb-4">Get Started</button>
+            </div>
+            <div class="col-md-6 text-center">
+                <img id="LodgingPic" class="img-fluid" src="~/wwwroot/Images/lodging-pict.jpg" alt="Capetropolis Cityscape">
+            </div>
+        </div>
+
+        <div id="hotelsSection" class="row text-center mt-5 justify-content-around d-none">
+            <div class="col-md-2 hotel-item">
+                <a href="@Url.Action("Hotels", "Home")"><img src="~/wwwroot/Images/HONEY.png" class="img-fluid" alt="CapeHoney Hotel"></a>
+                <button class="btn btn-outline-grey mt-2" onclick="bookHotel('capehoney')">CapeHoney Hotel</button>
+                <p>We offer special complementary services like massages, games, gym, swimming pool, evening buffet, and special party nights.</p>
+            </div>
+            <div class="col-md-2 hotel-item">
+                <a href="@Url.Action("Hotels", "Home")"><img src="~/wwwroot/Images/IVORY.png" class="img-fluid" alt="CapeIvory Hotel"></a>
+                <button class="btn btn-outline-grey mt-2" onclick="bookHotel('capeivory')">CapeIvory Hotel</button>
+                <p>We offer exquisite rooms at affordable rates. You will get an unforgettable experience.</p>
+            </div>
+            <div class="col-md-2 hotel-item">
+                <a href="@Url.Action("Hotels", "Home")"><img src="~/wwwroot/Images/SWEET.png" class="img-fluid" alt="CapeSweet Hotel"></a>
+                <button class="btn btn-outline-grey mt-2" onclick="bookHotel('capesweet')">CapeSweet Hotel</button>
+                <p>At CapeSweet, you will experience a mixture of sweetness and pleasure. We promise you an unbeatable experience.</p>
+            </div>
+            <div class="col-md-2 hotel-item">
+                <a href="@Url.Action("Hotels", "Home")"><img src="~/wwwroot/Images/HIVE.png" class="img-fluid" alt="CapeHive Hotel"></a>
+                <button class="btn btn-outline-grey mt-2" onclick="bookHotel('capehive')">CapeHive Hotel</button>
+                <p>Looking for a place to hide for a few days? CapeHive is perfect. Come and enjoy the serenity and ambiance of nature that our environment offers.</p>
+            </div>
+            <div class="col-md-2 hotel-item">
+                <a href="@Url.Action("Hotels", "Home")"><img src="~/wwwroot/Images/CROW.png" class="img-fluid" alt="CapeCow Hotel"></a>
+                <button class="btn btn-outline-grey mt-2" onclick="bookHotel('capecow')">CapeCow Hotel</button>
+                <p>Come to us, we have a variety of pleasurable services that are tailored to comfort our guests.</p>
+            </div>
+        </div>
+
+        <div class="row align-items-center mt-5">
+            <div class="col-md-6 text-center">
+                <img src="~/wwwroot/Images/Tourism Image.jpg" class="img-fluid" alt="Tourism Image">
+            </div>
+            <div class="col-md-6">
+                <h2>Capetropolis Tourism</h2>
+                <p>
+                    Welcome to Capetropolis. Our island will offer you comfort and pleasure, the kind that is rare to find.
+                    The attractions on our island include nature, a game reserve, historical sites and monuments, exquisite hotels and restaurants, shopping malls. Visit us to have a memorable experience.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#showHotelsBtn").click(function () {
+                $("#hotelsSection").toggleClass("d-none");
+            });
+        });
+    </script>
+</body>
+</html>
+

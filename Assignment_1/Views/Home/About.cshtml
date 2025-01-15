@@ -1,0 +1,132 @@
+﻿@{
+    ViewData["Title"] = "About Capetropolis";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>@ViewData["Title"] - Capetropolis</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('@Url.Content("~/wwwroot/Images/POOL.jpg")'); /* Replace with your background image path */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff;
+        }
+        .content-container {
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background for readability */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .card-body {
+            color: #000; /* Set the color of the hotel name and information to black */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 content-container">
+        <div class="text-center mb-5">
+            <h1>About Capetropolis</h1>
+        </div>
+
+        <div class="mb-4">
+            <h2>The Founding of Capetropolis</h2>
+            <p>
+                Capetropolis was founded in 1850 by a group of entrepreneurs who were drawn to the area's natural beauty and strategic location.
+                The city's founders, led by a wealthy businessman named Marcus Thompson, envisioned a luxurious resort town that would cater to the elite of society.
+            </p>
+        </div>
+
+        <div class="mb-4">
+            <h2>The Golden Age</h2>
+            <p>
+                During the late 19th and early 20th centuries, Capetropolis experienced a golden age of growth and development. The city became a popular destination
+                for the wealthy and famous, who were drawn to its stunning beaches, luxurious hotels, and vibrant cultural scene. The city's economy flourished, and
+                it became known as the "Jewel of the Coast."
+            </p>
+        </div>
+
+        <div class="mb-4">
+            <h2>The War Years</h2>
+            <p>
+                During World War II, Capetropolis played an important role in the war effort. The city's strategic location made it an ideal spot for military bases
+                and supply depots. The city's residents rallied around the war effort, and many served in the military or worked in the war industry.
+            </p>
+        </div>
+
+        <div class="mb-4">
+            <h2>Post-War Era</h2>
+            <p>
+                After the war, Capetropolis continued to grow and develop. The city became a popular destination for tourists, and its economy continued to thrive.
+                In the 1960s and 1970s, the city experienced a cultural renaissance, with the establishment of numerous art galleries, museums, and performance venues.
+            </p>
+        </div>
+
+        <div class="mb-4">
+            <h2>Modern Era</h2>
+            <p>
+                Today, Capetropolis is a thriving city that is known for its stunning natural beauty, rich history, and vibrant cultural scene. The city is home to
+                five luxurious hotels, each with its own unique character and charm. Visitors to Capetropolis can enjoy a wide range of activities, from water sports
+                and outdoor adventures to cultural attractions and fine dining.
+            </p>
+        </div>
+
+        <div class="mb-4">
+            <h2>Our Luxurious Hotels</h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@Url.Content("~/wwwroot/Images/HOTEL1.jpg")" class="card-img-top" alt="Hotel 1">
+                        <div class="card-body">
+                            <h5 class="card-title">CapeSweet</h5>
+                            <p class="card-text">Experience the ultimate in luxury and comfort at The Grand Capetropolis Hotel, located in the heart of the city.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@Url.Content("~/wwwroot/Images/HOTEL2.jpg")" class="card-img-top" alt="Hotel 2">
+                        <div class="card-body">
+                            <h5 class="card-title">CapeIvory</h5>
+                            <p class="card-text">Enjoy breathtaking ocean views and top-notch amenities at the Oceanview Resort.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@Url.Content("~/wwwroot/Images/HOTEL3.jpg")" class="card-img-top" alt="Hotel 3">
+                        <div class="card-body">
+                            <h5 class="card-title">CapeHive</h5>
+                            <p class="card-text">Indulge in the regal elegance of Capetropolis Palace, a favorite among dignitaries and celebrities.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@Url.Content("~/wwwroot/Images/HOTEL4.jpg")" class="card-img-top" alt="Hotel 4">
+                        <div class="card-body">
+                            <h5 class="card-title">CapeHoney</h5>
+                            <p class="card-text">Relax in style at the Sunset Boulevard Hotel, known for its stunning sunset views and luxurious accommodations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow-sm">
+                        <img src="@Url.Content("~/wwwroot/Images/HOTEL5.jpg")" class="card-img-top" alt="Hotel 5">
+                        <div class="card-body">
+                            <h5 class="card-title">CapeCrow</h5>
+                            <p class="card-text">Discover the charm of the Harbor Lights Inn, a boutique hotel offering personalized service and elegant rooms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

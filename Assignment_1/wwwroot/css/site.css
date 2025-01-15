@@ -1,0 +1,75 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.hotel-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.hotel-item {
+    flex: 0 0 auto;
+    width: calc(20% - 20px); 
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+    .hotel-item img {
+        width: 100px; /* Adjust icon width as needed */
+        height: auto;
+    }
+
+    .hotel-item button {
+        width: 100%;
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .hotel-item p {
+        font-size: 12px;
+        margin-top: 5px;
+    }
+
+    .hotel-item button:hover {
+        background-color: #0056b3;
+    }
+
+#GetStartedBtn {
+    margin-top: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+#LodgingPic.main-content home {
+    width: 100px; 
+    height: auto;
+   display:inline-flex
+ 
+}
+
+
+.capetropolis-description {
+    display:flex;
+
+}
+

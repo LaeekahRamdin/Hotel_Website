@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrative Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .dashboard-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .stats-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            flex: 1;
+            margin: 10px;
+        }
+
+        .sales-table, .customers-table {
+            margin-top: 20px;
+        }
+
+        .table th, .table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Capemint Holdings</h1>
+            <div>
+            <div>
+                <button id="export-button" class="btn btn-primary">Export Table</button>
+            </div>
+            </div>
+        </div>
+        <div class="dashboard-stats">
+            <div class="stats-card">
+                <h3>Total Bookings</h3>
+                <p id="total-bookings">0</p>
+            </div>
+            <div class="stats-card">
+                <h3>Total Income</h3>
+                <p id="total-income">R0.00</p>
+            </div>
+            <div class="stats-card">
+                <h3>Total Guests</h3>
+                <p id="total-guests">0</p>
+            </div>
+            <div class="stats-card">
+                <h3>Current Date</h3>
+                <p id="current-date"></p>
+            </div>
+        </div>
+        <div class="sales-table">
+            <h3>Sales Performance</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Hotel</th>
+                        <th>Number of Bookings</th>
+                        <th>Total Sales (R)</th>
+                        <th>Logo</th>
+                    </tr>
+                </thead>
+                <tbody id="sales-performance">
+                </tbody>
+            </table>
+        </div>
+        <div class="customers-table">
+            <h3>Customers</h3>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Booking Date</th>
+                        <th>Phone Number</th>
+                        <th>Hotel</th>
+                        <th>Room Type</th>
+                        <th>Number of Guests</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="customer-records">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+            function populateCustomerRecords(bookings) {
+                const customerRecordsTbody = document.getElementById('customer-records');
+                customerRecordsTbody.innerHTML = '';
+                bookings.forEach(booking => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${booking.firstName} ${booking.surname}</td>
+                        <td>${booking.bookingDate}</td>
+                        <td>${booking.telephone}</td>
+                        <td>${booking.hotel}</td>
+                        <td>${booking.roomType}</td>
+                        <td>1</td>
+                        <td>${booking.price}</td>
+                    `;
+                    customerRecordsTbody.appendChild(row);
+                });
+            }
+
+            function calculateStatistics(bookings) {
+                let totalBookings = 0;
+                let totalIncome = 0;
+                let totalGuests = bookings.length;
+
+                bookings.forEach(booking => {
+                    totalBookings++;
+                    totalIncome += parseInt(booking.price.replace(/R|,/g, ''));
+                    totalGuests += booking.numberOfGuests || 0;
+                });
+
+                document.getElementById('total-bookings').textContent = totalBookings;
+                document.getElementById('total-income').textContent = `R${totalIncome.toFixed(2)}`;
+                document.getElementById('total-guests').textContent = totalGuests;
+            }
+
+            function populateSalesPerformance(bookings) {
+                const hotelData = {};
+                bookings.forEach(booking => {
+                    if (!hotelData[booking.hotel]) {
+                        hotelData[booking.hotel] = { bookings: 0, sales: 0 };
+                    }
+                    hotelData[booking.hotel].bookings++;
+                    hotelData[booking.hotel].sales += parseInt(booking.price.replace(/R|,/g, ''));
+                });
+
+                const salesPerformanceTbody = document.getElementById('sales-performance');
+                salesPerformanceTbody.innerHTML = '';
+
+                for (const hotel in hotelData) {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                                <td>${hotel}</td>
+                                <td>${hotelData[hotel].bookings}</td>
+                                <td>R${hotelData[hotel].sales.toFixed(2)}</td>
+                                <td><img src="logos/${hotel.toLowerCase()}.png" alt="${hotel} logo" class="logo"></td>
+                            `;
+                    salesPerformanceTbody.appendChild(row);
+                }
+            }
+
+            function setCurrentDate() {
+                const currentDate = new Date();
+                const options = { year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('current-date').textContent = currentDate.toLocaleDateString(undefined, options);
+            }
+
+            function exportTable() {
+                const table = document.getElementById('customer-records');
+                let data = '';
+                for (let i = 0, row; row = table.rows[i]; i++) {
+                    for (let j = 0, col; col = row.cells[j]; j++) {
+                        data += col.innerText + '\t';
+                    }
+                    data += '\n';
+                }
+
+                const blob = new Blob([data], { type: 'text/plain' });
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'customer_records.txt';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+
+            document.getElementById('export-button').addEventListener('click', exportTable);
+
+            populateCustomerRecords(bookings);
+            calculateStatistics(bookings);
+            populateSalesPerformance(bookings);
+            setCurrentDate();
+        });
+    </script>
+</body>
+</html>
